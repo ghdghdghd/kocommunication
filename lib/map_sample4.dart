@@ -69,6 +69,8 @@ class _HomePageState extends State<MapSample4> {
   }
 
   Set<Marker> getmarkers() { //markers to place on map
+
+
     setState(() {
       markers.add(Marker( //add first marker
         markerId: MarkerId('current'),
