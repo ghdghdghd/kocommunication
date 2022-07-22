@@ -23,6 +23,9 @@ class _HomePageState extends State<MapSample4> {
   late PermissionStatus _permissionGranted;
   late CameraPosition _currentPosition;
 
+  final Set<Marker> markers = new Set(); //markers
+  static const LatLng showLocation = const LatLng(37.520555375455, 127.11505129348); //location to show in map
+
   @override
   initState() {
     super.initState();
@@ -65,6 +68,45 @@ class _HomePageState extends State<MapSample4> {
     });
   }
 
+  Set<Marker> getmarkers() { //markers to place on map
+    setState(() {
+      markers.add(Marker( //add first marker
+        markerId: MarkerId('current'),
+        position: showLocation, //position of marker
+        infoWindow: InfoWindow( //popup info
+          title: 'Marker Title First ',
+          snippet: 'My Custom Subtitle',
+        ),
+        icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+      ));
+
+      markers.add(Marker( //add second marker
+        markerId: MarkerId('current'),
+        position: LatLng(37.52055537545, 127.1150512934), //position of marker
+        infoWindow: InfoWindow( //popup info
+          title: 'Marker Title Second ',
+          snippet: 'My Custom Subtitle',
+        ),
+        icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+      ));
+
+      markers.add(Marker( //add third marker
+        markerId: MarkerId('current'),
+        position: LatLng(37.5205553754, 127.115051293), //position of marker
+        infoWindow: InfoWindow( //popup info
+          title: 'Marker Title Third ',
+          snippet: 'My Custom Subtitle',
+        ),
+        icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+      ));
+
+      //add more markers here
+    });
+
+    return markers;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,17 +122,43 @@ class _HomePageState extends State<MapSample4> {
             Marker(
               markerId: MarkerId('current'),
               position: LatLng(_lat, _lng),
-            )
+
+
+            ),
           },
+
+
           onMapCreated: (GoogleMapController controller) {
             _controller.complete(controller);
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.location_searching),
-        onPressed: () => _locateMe(),
+      floatingActionButton: Stack(
+        children: <Widget> [
+          Align(
+            alignment: Alignment(
+              Alignment.bottomLeft.x + 0.2, Alignment.bottomLeft.y),
+          child: FloatingActionButton(
+              onPressed: () => _locateMe(),
+              tooltip: '내위치',
+              child: Icon(Icons.location_searching),
+            ),
+          ),
+          Align(
+            alignment: Alignment(
+                Alignment.bottomLeft.x + 0.2, Alignment.bottomLeft.y - 0.2),
+            child: FloatingActionButton(
+              onPressed: () => getmarkers(),
+              tooltip: '회원위치공유',
+              child: Icon(Icons.emoji_people),
+            ),
+          )
+        ],
       ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.location_searching),
+      //   onPressed: () => _locateMe(),
+      // ),
     );
   }
 }
