@@ -49,56 +49,68 @@ class _HomePageState extends State<MapSample> {
         CameraUpdate.newLatLngZoom(
             LatLng(gps.latitude, gps.longitude), 15)
     );
+
     print('여기 위도경도');
     print(gps.latitude);
     print(gps.latitude);
-    setState(() {
-      markers.add(Marker( //add first marker
-        markerId: MarkerId('current'),
-        position: LatLng(gps.latitude, gps.longitude), //position of marker
-
-        icon: BitmapDescriptor.defaultMarker, //Icon for Marker
-      ));
-    });
+    // setState(() {
+    //   markers.add(Marker( //add first marker
+    //     markerId: MarkerId('current'),
+    //     position: LatLng(gps.latitude, gps.longitude), //position of marker
+    //
+    //     //icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+    //   ));
+    // });
 
   }
 
-  Set<Marker> getmarkers() { //markers to place on map
+  List<Marker> getmarkers() { //markers to place on map
 
 
-    setState(() {
-      markers.add(Marker( //add first marker
-        markerId: MarkerId('current'),
+
+
+         Marker oneMarker =  Marker( //add first marker
+        markerId: MarkerId('who1'),
         position: LatLng(37.520555375455, 127.11505129348), //position of marker
         infoWindow: InfoWindow( //popup info
           title: 'Marker Title First ',
           snippet: 'My Custom Subtitle',
         ),
-        icon: BitmapDescriptor.defaultMarker, //Icon for Marker
-      ));
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), //Icon for Marker
+      );
 
-      markers.add(Marker( //add second marker
-        markerId: MarkerId('current'),
-        position: LatLng(37.52055537545, 127.1150512934), //position of marker
+
+      Marker twoMarker = Marker( //add second marker
+        markerId: MarkerId('who2'),
+        position: LatLng(37.520554, 127.115293), //position of marker
         infoWindow: InfoWindow( //popup info
           title: 'Marker Title Second ',
           snippet: 'My Custom Subtitle',
         ),
-        icon: BitmapDescriptor.defaultMarker, //Icon for Marker
-      ));
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), //Icon for Marker
+      );
 
-      markers.add(Marker( //add third marker
-        markerId: MarkerId('current'),
-        position: LatLng(37.5205553754, 127.115051293), //position of marker
+
+      Marker thirdMarker = Marker( //add third marker
+        markerId: MarkerId('who3'),
+        position: LatLng(37.5205, 127.115), //position of marker
         infoWindow: InfoWindow( //popup info
           title: 'Marker Title Third ',
           snippet: 'My Custom Subtitle',
         ),
-        icon: BitmapDescriptor.defaultMarker, //Icon for Marker
-      ));
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), //Icon for Marker
+      );
 
       //add more markers here
-    });
+
+         setState(() {
+    markers.add(oneMarker);
+    markers.add(twoMarker);
+    markers.add(thirdMarker);
+
+
+
+     });
 
     return markers;
   }
@@ -108,7 +120,13 @@ class _HomePageState extends State<MapSample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("google map")
+      ),
+        
         body: GoogleMap(
+          myLocationEnabled: true,
+          myLocationButtonEnabled: false,
           initialCameraPosition: _initialPosition,
           mapType: MapType.normal,  //표시할 지도 유형(일반,위성,하이브리드)
           onMapCreated: (controller) {
