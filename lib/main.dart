@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:kocommunication/map_sample2.dart';
-import 'package:kocommunication/map_sample4.dart';
-//import 'map_sample.dart';
+import 'package:kocommunication/map_sample.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MapSample4(),
+      home: MapSample(),
     );
   }
 }
