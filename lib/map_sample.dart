@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
 class MapSample extends StatefulWidget {
 
@@ -15,6 +16,7 @@ class MapSample extends StatefulWidget {
 class _HomePageState extends State<MapSample> {
   // 애플리케이션에서 지도를 이동하기 위한 컨트롤러
   late GoogleMapController _controller;
+
 
   // 이 값은 지도가 시작될 때 첫 번째 위치입니다.
   final CameraPosition _initialPosition =
@@ -43,6 +45,10 @@ class _HomePageState extends State<MapSample> {
 
   _locateMe() async {
     var gps = await getCurrentLocation();
+    List<Placemark> placemarks = await placemarkFromCoordinates(gps.latitude, gps.longitude);
+    print("도시정보여기");
+    print(placemarks[0].administrativeArea);
+
 
     _controller.animateCamera(
       //CameraUpdate.newLatLng(LatLng(gps.latitude, gps.longitude)),
@@ -64,57 +70,55 @@ class _HomePageState extends State<MapSample> {
 
   }
 
-  List<Marker> getmarkers() { //markers to place on map
-
+  Future<List<Marker>> getmarkers() async { //markers to place on map
 
 
 
          Marker oneMarker =  Marker( //add first marker
         markerId: MarkerId('who1'),
-        position: LatLng(37.520555375455, 127.11505129348), //position of marker
+        position: LatLng(37.510555, 127.1150512), //position of marker
         infoWindow: InfoWindow( //popup info
           title: 'Marker Title First ',
           snippet: 'My Custom Subtitle',
         ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), //Icon for Marker
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), //Icon for Marker
       );
 
 
-      Marker twoMarker = Marker( //add second marker
+         Marker twoMarker = Marker( //add second marker
         markerId: MarkerId('who2'),
-        position: LatLng(37.520554, 127.115293), //position of marker
+        position: LatLng(37.510555, 127.1080512), //position of marker
         infoWindow: InfoWindow( //popup info
           title: 'Marker Title Second ',
           snippet: 'My Custom Subtitle',
         ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), //Icon for Marker
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), //Icon for Marker
       );
 
 
       Marker thirdMarker = Marker( //add third marker
         markerId: MarkerId('who3'),
-        position: LatLng(37.5205, 127.115), //position of marker
+        position: LatLng(37.513555, 127.1000), //position of marker
         infoWindow: InfoWindow( //popup info
           title: 'Marker Title Third ',
           snippet: 'My Custom Subtitle',
         ),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue), //Icon for Marker
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), //Icon for Marker
       );
 
-      //add more markers here
-
-         setState(() {
-    markers.add(oneMarker);
-    markers.add(twoMarker);
-    markers.add(thirdMarker);
-
-
-
+        //마커간 거리측정
+        // double oneDistance = Geolocator.distanceBetween(gps.latitude, gps.longitude, oneLat, onelogi);
+        // print("여기다여기");
+        // print(oneDistance);
+        
+    setState(() {
+      markers.add(oneMarker);
+      markers.add(twoMarker);
+      markers.add(thirdMarker);
      });
 
     return markers;
   }
-
 
 
   @override
