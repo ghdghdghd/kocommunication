@@ -48,14 +48,12 @@ class _HomePageState extends State<MapSample> {
   _locateMe() async {
     var gps = await getCurrentLocation();
     List<Placemark> placemarks = await placemarkFromCoordinates(gps.latitude, gps.longitude);
-    print("도시정보여기");
     print(placemarks[0].administrativeArea.toString());
-   // var locateMeCity = placemarks[0].administrativeArea.toString();
+
 
     _controller.animateCamera(
-      //CameraUpdate.newLatLng(LatLng(gps.latitude, gps.longitude)),
-        CameraUpdate.newLatLngZoom(
-            LatLng(gps.latitude, gps.longitude), 15)
+      CameraUpdate.newLatLngZoom(
+          LatLng(gps.latitude, gps.longitude), 15)
     );
 
     print('여기 위도경도');
@@ -67,7 +65,8 @@ class _HomePageState extends State<MapSample> {
   Future<List<Marker>> getmarkers() async { //markers to place on map
 
     List latLogi = List.generate(50, (i) => List.filled(2, null, growable: false));
-    latLogi = [[37.510555, 127.1150512],[37.510555, 127.1080512],[37.513555, 127.1000],[39.9035, 116.388],[35.68288, 139.76991],[37.404704734328, 127.10535530866]];
+    latLogi = [[37.510555, 127.1150512],[37.510555, 127.1080512],[37.513555, 127.1000],[39.9035, 116.388],
+                                        [35.68288, 139.76991],[35.684879, 139.508178],[35.720863, 139.293221],[35.00088, 138.99991],[35.436081, 139.103529],[37.404704734328, 127.10535530866]];
 
 
 
@@ -75,11 +74,9 @@ class _HomePageState extends State<MapSample> {
       List<Placemark> mCityInfo = await placemarkFromCoordinates(gps.latitude, gps.longitude);
       var mCityArea = mCityInfo[0].administrativeArea.toString();
 
+      List latlogiArea = [];
 
-
-    List latlogiArea = [];
-
-    for(int y=0; y<latLogi.length; y++){
+     for(int y=0; y<latLogi.length; y++){
 
       List<Placemark> info = await placemarkFromCoordinates(latLogi[y][0], latLogi[y][1]);
       var CityArea = info[0].administrativeArea.toString();
@@ -92,17 +89,17 @@ class _HomePageState extends State<MapSample> {
     // print(latlogiArea);
 
 
-    if( latlogiArea != null) {
+    if( latlogiArea != null) {   //현재 같은 도시에 있는 회원이 있다면  마커추가 폼을 반복문을 실행 한다
       markers.addAll([
         for(int a = 0; a < latlogiArea.length; a++)
           Marker(
-            markerId: MarkerId('who${a}'),
-            position: LatLng(latlogiArea[a][0], latlogiArea[a][1]),
+            markerId: MarkerId('who${a}'),                           //마커 아이디
+            position: LatLng(latlogiArea[a][0], latlogiArea[a][1]),  //마커의 위도경도
             infoWindow: InfoWindow(
-              title: '회원${a + 1}',
-              snippet: '부제',
+              title: '회원${a + 1}',                                  //마커 정보
+              snippet: '부제',                                        //마커 정보 부제
             ),
-            icon: BitmapDescriptor.defaultMarkerWithHue(
+            icon: BitmapDescriptor.defaultMarkerWithHue(             //마커 아이콘 색지정
                 BitmapDescriptor.hueRose),
 
           )
@@ -130,17 +127,17 @@ class _HomePageState extends State<MapSample> {
       ),
 
         body: GoogleMap(
-          myLocationEnabled: true,
-          myLocationButtonEnabled: false,
-          initialCameraPosition: _initialPosition,
+          myLocationEnabled: true,  //내위치 지도에 표시
+          myLocationButtonEnabled: false,   //내위치 찾기 버튼
+          initialCameraPosition: _initialPosition,  //지도 시작시 처음 보여지는 화면 값
           mapType: MapType.normal,  //표시할 지도 유형(일반,위성,하이브리드)
-          onMapCreated: (controller) {
+          onMapCreated: (controller) {    //맵생성
             setState(() {
               _controller = controller;
             });
           },
           markers: Set.from(markers),
-          //markers.toSet(),  
+          //markers.toSet(),
 
           // 클릭한 위치가 중앙에 표시
           // onTap: (cordinate) {
@@ -149,33 +146,33 @@ class _HomePageState extends State<MapSample> {
           // },
         ),
 
-        // floatingActionButton 클릭시 줌 아웃
+        // floatingActionButton
       floatingActionButton: Stack(
         children: <Widget> [
           Align(
             alignment: Alignment(
-                Alignment.bottomLeft.x + 0.2, Alignment.bottomLeft.y),
+                Alignment.bottomLeft.x + 0.2, Alignment.bottomLeft.y),  //버튼 위치 지정
             child: FloatingActionButton(
-              onPressed: () => _locateMe(),
-              tooltip: '내위치',
+              onPressed: () => _locateMe(),    //버튼 눌렀을때 동작 함수
+              tooltip: '내위치',                //버튼동작 설명 툴팁
               child: Icon(
-                Icons.my_location,
-                color: Colors.black,
+                Icons.my_location,             //버튼 아이콘 지정
+                color: Colors.black,           //버튼 아이콘색 지정
               ),
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white,   //버튼 배경색 지정
             ),
           ),
           Align(
             alignment: Alignment(
-                Alignment.bottomLeft.x + 0.2, Alignment.bottomLeft.y - 0.2),
+                Alignment.bottomLeft.x + 0.2, Alignment.bottomLeft.y - 0.2), //보튼 위치 지정
             child: FloatingActionButton(
-              onPressed: () => getmarkers(),
-              tooltip: '회원위치공유',
+              onPressed: () => getmarkers(),    //버튼 눌렀을때 동작 함수
+              tooltip: '회원위치공유',            //버튼동작 설명 툴팁
               child: Icon(
-                Icons.emoji_people,
-                color: Colors.black,
+                Icons.emoji_people,             //버튼 아이콘 지정
+                color: Colors.black,            //버튼 아이콘색 지정
               ),
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white,    //버튼 배경색 지정
             ),
           )
         ],
