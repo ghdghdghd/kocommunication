@@ -14,10 +14,9 @@ class MapSample extends StatefulWidget {
 }
 
 class _HomePageState extends State<MapSample> {
+
   // 애플리케이션에서 지도를 이동하기 위한 컨트롤러
   late GoogleMapController _controller;
-
-
 
   // 이 값은 지도가 시작될 때 첫 번째 위치입니다.
   final CameraPosition _initialPosition =
@@ -44,6 +43,8 @@ class _HomePageState extends State<MapSample> {
     });
   }
 
+
+
   _locateMe() async {
     var gps = await getCurrentLocation();
     List<Placemark> placemarks = await placemarkFromCoordinates(gps.latitude, gps.longitude);
@@ -60,14 +61,6 @@ class _HomePageState extends State<MapSample> {
     print('여기 위도경도');
     print(gps.latitude);
     print(gps.latitude);
-    // setState(() {
-    //   markers.add(Marker( //add first marker
-    //     markerId: MarkerId('current'),
-    //     position: LatLng(gps.latitude, gps.longitude), //position of marker
-    //
-    //     //icon: BitmapDescriptor.defaultMarker, //Icon for Marker
-    //   ));
-    // });
 
   }
 
@@ -84,28 +77,6 @@ class _HomePageState extends State<MapSample> {
 
 
 
-
-      // List<Placemark> oneCityInfo = await placemarkFromCoordinates(37.510555, 127.1150512);
-      // var oneCityArea = oneCityInfo[0].administrativeArea.toString();
-      //
-      //
-      // List<Placemark> secondCityInfo = await placemarkFromCoordinates(37.510555, 127.1080512);
-      // var secondCityArea = secondCityInfo[0].administrativeArea.toString();
-      //
-      // List<Placemark> thirdCityInfo = await placemarkFromCoordinates(37.513555, 127.1000);
-      // var thirdCityArea = thirdCityInfo[0].administrativeArea.toString();
-      //
-      // List<Placemark> fourthCityInfo = await placemarkFromCoordinates(39.9035, 116.388);
-      // var fourthCityArea = fourthCityInfo[0].administrativeArea.toString();
-      //
-      // List<Placemark> fifthCityInfo = await placemarkFromCoordinates(35.68288, 139.76991);
-      // var fifthCityArea = fifthCityInfo[0].administrativeArea.toString();
-      //
-      // List<Placemark> sixthCityInfo = await placemarkFromCoordinates(37.404704734328, 127.10535530866);
-      // var sixthCityArea = sixthCityInfo[0].administrativeArea.toString();
-
-
-
     List latlogiArea = [];
 
     for(int y=0; y<latLogi.length; y++){
@@ -117,11 +88,10 @@ class _HomePageState extends State<MapSample> {
       }
 
     };
-    print('여기다지역거른거');
-    print(latlogiArea);
+    // print('여기다지역거른거');
+    // print(latlogiArea);
 
-    //List markerId = ['who1', 'who2', 'who3', 'who4','who5','who5','who7'];
-    //List markeList = ["oneMarker", "secondMarker", "thirdMarker", "fourthMarker", "fifthMarker", "sixthMarker"];
+
     if( latlogiArea != null) {
       markers.addAll([
         for(int a = 0; a < latlogiArea.length; a++)
@@ -145,129 +115,11 @@ class _HomePageState extends State<MapSample> {
       markers;
     });
 
-
-
-
-
-      //    Marker oneMarker =  Marker( //add first marker
-      //   markerId: MarkerId('who1'),
-      //   position: LatLng(37.510555, 127.1150512), //position of marker
-      //   infoWindow: InfoWindow( //popup info
-      //     title: 'Marker Title First ',
-      //     snippet: 'My Custom Subtitle',
-      //   ),
-      //   icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), //Icon for Marker
-      // );
-      //
-      //
-      //    Marker secondMarker = Marker( //add second marker
-      //   markerId: MarkerId('who2'),
-      //   position: LatLng(37.510555, 127.1080512), //position of marker
-      //   infoWindow: InfoWindow( //popup info
-      //     title: 'Marker Title Second ',
-      //     snippet: 'My Custom Subtitle',
-      //   ),
-      //   icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), //Icon for Marker
-      // );
-      //
-      //
-      // Marker thirdMarker = Marker( //add third marker
-      //   markerId: MarkerId('who3'),
-      //   position: LatLng(37.513555, 127.1000), //position of marker
-      //   infoWindow: InfoWindow( //popup info
-      //     title: 'Marker Title Third ',
-      //     snippet: 'My Custom Subtitle',
-      //   ),
-      //   icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), //Icon for Marker
-      // );
-      //
-      //    Marker fourthMarker = Marker( //add third marker
-      //      markerId: MarkerId('who4'),
-      //      position: LatLng(39.9035, 116.388), //position of marker
-      //      infoWindow: InfoWindow( //popup info
-      //        title: 'Marker Title four ',
-      //        snippet: 'My Custom Subtitle',
-      //      ),
-      //      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), //Icon for Marker
-      //    );
-      //
-      //    Marker fifthMarker = Marker( //add third marker
-      //      markerId: MarkerId('who5'),
-      //      position: LatLng(35.68288, 139.76991), //position of marker
-      //      infoWindow: InfoWindow( //popup info
-      //        title: 'Marker Title five ',
-      //        snippet: 'My Custom Subtitle',
-      //      ),
-      //      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), //Icon for Marker
-      //    );
-      //
-      // Marker sixthMarker = Marker( //add third marker
-      //   markerId: MarkerId('who6'),
-      //   position: LatLng(37.404704734328, 127.10535530866), //position of marker
-      //   infoWindow: InfoWindow( //popup info
-      //     title: 'Marker Title six ',
-      //     snippet: 'My Custom Subtitle',
-      //   ),
-      //   icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRose), //Icon for Marker
-      // );
-
-              //마커간 거리측정
-        // double oneDistance = Geolocator.distanceBetween(gps.latitude, gps.longitude, oneLat, onelogi);
-        // print("여기다여기");
-        // print(oneDistance);
-
-          //지역거르고 마커찍기
-      // List cityList = [oneCityArea, secondCityArea, thirdCityArea ,fourthCityArea, fifthCityArea, sixthCityArea];
-      // List markeList = [oneMarker, secondMarker, thirdMarker, fourthMarker, fifthMarker, sixthMarker];
-      //
-      // for(int i=0; i<cityList.length; i++){
-      //     if(mCityArea == cityList[i]) {
-      //
-      //       for(int x=0; x<markeList.length; x++) {
-      //         if (i == x) {
-      //           setState(() {
-      //             markers.add(markeList[x]);
-      //           });
-      //         }
-      //       }
-      //     }
-      // };
-
-     // if(mCityArea == oneCityArea){
-     //   setState(() {
-     //     markers.add(oneMarker);
-     //   });
-     // }
-     //
-     // if(mCityArea == secondCityArea){
-     //   setState(() {
-     //     markers.add(secondMarker);
-     //   });
-     // }
-     // if(mCityArea == thirdCityArea){
-     //   setState(() {
-     //     markers.add(thirdMarker);
-     //   });
-     // }
-     // if(mCityArea == fourthCityArea){
-     //   setState(() {
-     //     markers.add(fourthMarker);
-     //   });
-     // }
-     // if(mCityArea == fifthCityArea){
-     //   setState(() {
-     //     markers.add(fifthMarker);
-     //   });
-     // }
-     //  if(mCityArea == sixthCityArea){
-     //    setState(() {
-     //      markers.add(sixthMarker);
-     //    });
-     //  }
-
-
     return markers;
   }
+
+
+
 
 
   @override
@@ -328,8 +180,6 @@ class _HomePageState extends State<MapSample> {
           )
         ],
       ),
-
-
 
 
     );
