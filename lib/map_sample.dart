@@ -71,19 +71,17 @@ class _HomePageState extends State<MapSample> {
 
 
       var gps = await getCurrentLocation();
-      List<Placemark> mCityInfo = await placemarkFromCoordinates(gps.latitude, gps.longitude);
-      var mCityArea = mCityInfo[0].administrativeArea.toString();
+      List<Placemark> mCityInfo = await placemarkFromCoordinates(gps.latitude, gps.longitude); //좌표값으로 도시정보 가져오기
+      var mCityArea = mCityInfo[0].administrativeArea.toString();                              //도시정보주에 administrativeArea값만 가져오기
 
       List latlogiArea = [];
 
      for(int y=0; y<latLogi.length; y++){
-
-      List<Placemark> info = await placemarkFromCoordinates(latLogi[y][0], latLogi[y][1]);
-      var CityArea = info[0].administrativeArea.toString();
-      if(mCityArea == CityArea){
-        latlogiArea.add([latLogi[y][0], latLogi[y][1]]);
-      }
-
+       List<Placemark> info = await placemarkFromCoordinates(latLogi[y][0], latLogi[y][1]);
+       var CityArea = info[0].administrativeArea.toString();
+       if(mCityArea == CityArea){
+         latlogiArea.add([latLogi[y][0], latLogi[y][1]]);
+       }
     };
     // print('여기다지역거른거');
     // print(latlogiArea);
